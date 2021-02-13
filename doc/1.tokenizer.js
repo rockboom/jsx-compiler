@@ -1,6 +1,7 @@
 let esprima = require("esprima");
 let estraverse = require("estraverse-fb");
-let sourcecode = `<div id="title"><span>hello</span>world</div>`;
+// let sourcecode = `<div id="title"><span>hello</span>world</div>`;
+let sourcecode = "10+20";
 let ast = esprima.parseModule(sourcecode,{jsx:true,tokens:true})
 // console.log(ast);
 let indent = 0;
