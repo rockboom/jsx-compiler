@@ -1,6 +1,6 @@
 let parse = require('./parse.js');
 let evaluate = require('./evaluate.js');
-let sourceCode = '5-1+4/2*3';
+let sourceCode = '(3-2)*3*(2+2)';
 debugger
 
 let ast = parse(sourceCode);

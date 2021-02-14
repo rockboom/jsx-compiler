@@ -4,10 +4,11 @@ const nodeTypes = require('./nodeTypes');
 const tokenTypes = require('./tokenTypes');
 /* 
 递归下降 即从外层到内层
-additive -> minus | minus + additive 包括 +
-minus -> multiple | multiple - minus 包括 -
-multiple -> divide | divide * multiple     包括 *
-divide -> NUMBER | NUMBER / divide     包括 /
+additive -> minus | minus + additive        包括 +
+minus -> multiple | multiple - minus        包括 -
+multiple -> divide | divide * multiple      包括 *
+divide - > primary | primary / divide       包括 /
+primary - > NUMBER | (additive) 基础规则
 */
 function toAST(tokenReader){
     let rootNode = new ASTNode(nodeTypes.Program);
@@ -76,8 +77,9 @@ function multiple(tokenReader){
     return node;
 }
 
+// divide - > primary | primary / divide 包括 /
 function divide(tokenReader) {
-    let child1 = number(tokenReader); // 先匹配出number 但是乘法规则并没有匹配结束
+    let child1 = primary(tokenReader); // 先匹配出number 但是乘法规则并没有匹配结束
     let node = child1; // node = 3
     let token = tokenReader.peek(); // +
     if (child1 != null && token != null) {
@@ -89,6 +91,20 @@ function divide(tokenReader) {
                 node.appendChild(child1);
                 node.appendChild(child2);
             }
+        }
+    }
+    return node;
+}
+
+// primary - > NUMBER | (additive) 基础规则
+function primary(tokenReader) {
+    let node = number(tokenReader);
+    if(!node){
+        let token = tokenReader.peek();
+        if(token != null && token.type === tokenTypes.LEFT_PARA){
+            tokenReader.read();
+            node = additive(tokenReader);
+            tokenReader.read();
         }
     }
     return node;

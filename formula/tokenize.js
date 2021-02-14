@@ -1,6 +1,14 @@
-let RegExpObject = /([0-9]+)|(\+)|(\*)|(\-)|(\/)/g;
+let RegExpObject = /([0-9]+)|(\+)|(\*)|(\-)|(\/)|(\()|(\))/g;
 let tokenTypes = require('./tokenTypes');
-let tokenNames = [tokenTypes.NUMBER, tokenTypes.PLUS, tokenTypes.MULTIPLY,tokenTypes.MINUS,tokenTypes.DIVIDE];
+let tokenNames = [
+    tokenTypes.NUMBER, 
+    tokenTypes.PLUS, 
+    tokenTypes.MULTIPLY,
+    tokenTypes.MINUS,
+    tokenTypes.DIVIDE,
+    tokenTypes.LEFT_PARA,
+    tokenTypes.RIGHT_PARA
+];
 // script = 2+3*4;
 function* tokenizer(script) {
     while (true) {
