@@ -8,7 +8,6 @@ function* tokenizer(script) {
         if (!result) break;
         // 这里返回匹配项的索引
         let index = result.findIndex((item,index)=>index>0&&!!item);
-        console.log('index:',index);
         let token = {};
         token.type = tokenNames[index-1];
         token.value = result[0]; // 第一项就是匹配的内容，后面的是分组的信息

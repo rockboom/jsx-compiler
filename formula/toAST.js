@@ -5,7 +5,7 @@ const tokenTypes = require('./tokenTypes');
 /* 
 递归下降 即从外层到内层
 additive -> multiple | multiple + additive
-multiple -> NUMBER | NUMBER + multiple
+multiple -> NUMBER | NUMBER * multiple
 */
 function toAST(tokenReader){
     let rootNode = new ASTNode(nodeTypes.Program);
@@ -17,6 +17,8 @@ function toAST(tokenReader){
     }
     return rootNode;
 }
+
+// additive -> multiple | multiple + additive
 function additive(tokenReader){
     debugger
     let child1 = multiple(tokenReader);
@@ -35,6 +37,8 @@ function additive(tokenReader){
     }
     return node;
 }
+
+// multiple -> NUMBER | NUMBER * multiple
 function multiple(tokenReader){
     let child1 = number(tokenReader); // 先匹配出number 但是乘法规则并没有匹配结束
     let node = child1;// node = 3
@@ -42,7 +46,7 @@ function multiple(tokenReader){
     if(child1 != null && token != null){
         if(token.type === tokenTypes.MULTIPLY){
             token = tokenReader.read();// 读取下一个token
-            let child2 = number(tokenReader); // 4
+            let child2 = multiple(tokenReader); // 4
             if(child2 != null){
                 node = new ASTNode(nodeTypes.Multiplicative);
                 node.appendChild(child1);
