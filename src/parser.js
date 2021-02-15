@@ -89,7 +89,7 @@ function parser(sourceCode){
                     throw new Error(`开始标签[${parent.openingElement.name.name}]和结束标签[${token.value}]不匹配`);
                 }
                 return {
-                    type:nodeTypes.JSXIdentifier,
+                    type:nodeTypes.JSXClosingElement,
                     name:{
                         type:nodeTypes.JSXIdentifier,
                         name:token.value
@@ -114,8 +114,8 @@ module.exports = {
     parser
 };
 
-let sourceCode = '<div id="title" name={myname}><span1>hello</span>world</div>';
-console.log(JSON.stringify(parser(sourceCode),null,2));
+// let sourceCode = '<div id="title" name={myname}><span1>hello</span>world</div>';
+// console.log(JSON.stringify(parser(sourceCode),null,2));
 
 /* 
 jsxElement => < JSXIdentifier attribute* > child* < /JSXIdentifier>
