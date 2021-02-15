@@ -89,7 +89,7 @@ function attributeValue(char) { // char = "
     if (char === '"') {
         currentToken.type = tokenTypes.AttributeStringValue;
         currentToken.value = "";
-        currentToken.value += char;
+        // currentToken.value += char; // 生成代码时会出现两个引号的问题 """"
         return attributeStringValue; // 开始读字符串属性值
     }else if(char === '{'){
         currentToken.type = tokenTypes.AttributeExpressionValue;
@@ -114,7 +114,7 @@ function attributeStringValue(char) { // t
         currentToken.value += char;
         return attributeStringValue;
     } else if (char === '"') { // 说明字符串结束了
-        currentToken.value += char;
+        // currentToken.value += char; // 生成代码时会出现两个引号的问题 """"
         emit(currentToken); // { type: 'AttributeStringValue', value: 'title' }
         return tryLeaveAttribute;
     }

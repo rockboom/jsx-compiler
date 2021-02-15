@@ -90,7 +90,7 @@ function transformer(ast){
 module.exports = {
     transformer
 }
-let code = `<div id="title" name={myname}><span>hello</span>world</div>`;
-let ast = parser(code);
-transformer(ast);
-console.log(JSON.stringify(ast,null,2));
+// let code = `<div id="title" name={myname}><span>hello</span>world</div>`;
+// let ast = parser(code);
+// transformer(ast);
+// console.log(JSON.stringify(ast,null,2));
