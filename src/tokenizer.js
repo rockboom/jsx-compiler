@@ -32,7 +32,7 @@ function eof() { // end of file
 }
 
 function foundLeftParentheses(char) { // char = h1
-    if (LETTERS.test()) { // 如果char是一个小写字母的话
+    if (LETTERS.test(char)) { // 如果char是一个小写字母的话
         currentToken.type = tokenTypes.JSXIdentifier;
         currentToken.value += char; // h
         return jsxIdentifier; // 继续收集标识符
@@ -162,7 +162,6 @@ function jsxText(char) {
 }
 
 function tokenizer(input) {
-    debugger
     let state = start; // 刚开始处于开始状态
     for (let char of input) { // 遍历或者说循环所有的字符
         if (state) {
@@ -172,8 +171,8 @@ function tokenizer(input) {
     return tokens;
 }
 
-let sourceCode = '<div id="title" name={myname}><span>hello</span>world</div>';
-console.log(tokenizer(sourceCode));
+// let sourceCode = '<div id="title" name={myname}><span>hello</span>world</div>';
+// console.log(tokenizer(sourceCode));
 module.exports = {
     tokenizer
 }
