@@ -1,42 +1,63 @@
-const {parser} = require('./parser');
+const {
+    parser
+} = require('./parser');
 const nodeTypes = require('./nodeTypes');
-function traverse(ast,visitor){
-    function traverseArray(array,parent){
-        array.forEach(child => {
-            traverseNode(child);
-        });
-    }
-    // 
-    function traverseNode(node,parent){
-        let method = visitor[node.type];
-        // 当开始遍历子节点 要执行进入方法
-        if(method){
-            if(typeof method === 'function') {
-                method({node},parent);
-            }else{
-                method.enter({node},parent);
+function replace(parent,oldNode,newNode){
+    if(parent){
+        for(const key in parent){
+            if(parent.hasOwnProperty(key)){
+                if(parent[key] === oldNode){
+                    parent[key] = newNode;
+                }
             }
         }
-        switch(node.type){
+    }
+}
+function traverse(ast, visitor) {
+    function traverseArray(array, parent) {
+        array.forEach(child => {
+            traverseNode(child,parent);
+        });
+    }
+    // 遍历 转换都是使用babel的方式
+    function traverseNode(node, parent) {
+        let replaceWith = replace.bind(null,parent,node);
+        let method = visitor[node.type];
+        // 当开始遍历子节点 要执行进入方法
+        if (method) {
+            if (typeof method === 'function') {
+                method({
+                    node,
+                    replaceWith
+                }, parent);
+            } else {
+                if (typeof method.enter === 'function') {
+                    method.enter({
+                        node,
+                        replaceWith
+                    }, parent);
+                }
+            }
+        }
+        switch (node.type) {
             case nodeTypes.Program:
-                traverseArray(node.body,node);
+                traverseArray(node.body, node);
                 break;
             case nodeTypes.ExpressionStatement:
-                traverseNode(node.expression);
+                traverseNode(node.expression,node);
                 break;
             case nodeTypes.JSXElement:
-                debugger
-                traverseNode(node.openingElement,node);
+                traverseNode(node.openingElement, node);
                 traverseArray(node.children, node);
-                traverseNode(node.closingElement,node);
+                traverseNode(node.closingElement, node);
                 break;
             case nodeTypes.openingElement:
-                traverseNode(node.name,node);
+                traverseNode(node.name, node);
                 traverseArray(node.attributes, node);
                 break;
             case nodeTypes.JSXAttribute:
-                traverseNode(node.name,node);
-                traverseNode(node.value,node);
+                traverseNode(node.name, node);
+                traverseNode(node.value, node);
             case nodeTypes.closingElement:
                 traverseNode(node.name, node);
                 break;
@@ -48,16 +69,19 @@ function traverse(ast,visitor){
                 break;
         }
         // 当遍历完子节点 离开此节点的时候要执行离开方法
-        if(method && method.exit){
-            method.exit({node},parent);
+        if (method && method.exit) {
+            method.exit({
+                node,
+                replaceWith
+            }, parent);
         }
     }
-    traverseNode(ast,null);
+    traverseNode(ast, null);
 }
 module.exports = {
-    parser
+    traverse
 }
-let sourceCode = '<div id="title" name={myname}><span>hello</span>world</div>';
+/* let sourceCode = '<div id="title" name={myname}><span>hello</span>world</div>';
 let ast = parser(sourceCode);
 traverse(ast,{
     JSXOpeningElement:{
@@ -71,4 +95,4 @@ traverse(ast,{
     JSXClosingElement(nodePath, parent){
         console.log(`进入结束元素:`, nodePath.node);
     }
-})
+}) */

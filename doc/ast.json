@@ -4,72 +4,79 @@
         {
             "type": "ExpressionStatement",
             "expression": {
-                "type": "JSXElement",
-                "openingElement": {
-                    "type": "JSXOpeningElement",
-                    "name": {
-                        "type": "JSXIdentifier",
-                        "name": "div"
+                "type": "CallExpression",
+                "callee": {
+                    "type": "MemberExpression",
+                    "object": {
+                        "type": "Identifier",
+                        "name": "React"
                     },
-                    "attributes": [
-                        {
-                            "type": "JSXAttribute",
-                            "name": {
-                                "type": "JSXAttribute",
-                                "name": "id"
-                            },
-                            "value": {
-                                "type": "Literal",
-                                "value": "\"title\""
-                            }
-                        },
-                        {
-                            "type": "JSXAttribute",
-                            "name": {
-                                "type": "JSXAttribute",
-                                "name": "name"
-                            },
-                            "value": {
-                                "type": "Literal",
-                                "value": "{myname}"
-                            }
-                        }
-                    ]
-                },
-                "closingElement": {
-                    "type": "JSXIdentifier",
-                    "name": {
-                        "type": "JSXIdentifier",
-                        "name": "div"
+                    "property": {
+                        "type": "Identifier",
+                        "name": "createElement"
                     }
                 },
-                "children": [
+                "arguments": [
                     {
-                        "type": "JSXElement",
-                        "openingElement": {
-                            "type": "JSXOpeningElement",
-                            "name": {
-                                "type": "JSXIdentifier",
-                                "name": "span"
+                        "type": "StringLiteral",
+                        "value": "div"
+                    },
+                    {
+                        "type": "ObjectExpression",
+                        "properties": [
+                            {
+                                "type": "Property",
+                                "key": {
+                                    "type": "Identifier",
+                                    "name": "id"
+                                },
+                                "value": {
+                                    "type": "StringLiteral",
+                                    "value": "\"title\""
+                                }
                             },
-                            "attributes": []
-                        },
-                        "closingElement": {
-                            "type": "JSXIdentifier",
-                            "name": {
-                                "type": "JSXIdentifier",
-                                "name": "span"
+                            {
+                                "type": "Property",
+                                "key": {
+                                    "type": "Identifier",
+                                    "name": "name"
+                                },
+                                "value": {
+                                    "type": "StringLiteral",
+                                    "value": "{myname}"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "type": "CallExpression",
+                        "callee": {
+                            "type": "MemberExpression",
+                            "object": {
+                                "type": "Identifier",
+                                "name": "React"
+                            },
+                            "property": {
+                                "type": "Identifier",
+                                "name": "createElement"
                             }
                         },
-                        "children": [
+                        "arguments": [
                             {
-                                "type": "JSXText",
+                                "type": "StringLiteral",
+                                "value": "span"
+                            },
+                            {
+                                "type": "NullLiteral"
+                            },
+                            {
+                                "type": "StringLiteral",
                                 "value": "hello"
                             }
                         ]
                     },
                     {
-                        "type": "JSXText",
+                        "type": "StringLiteral",
                         "value": "world"
                     }
                 ]
