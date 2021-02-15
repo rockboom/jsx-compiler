@@ -1,4 +1,4 @@
-let RegExpObject = /([0-9]+)|(\+)|(\*)|(\-)|(\/)|(\()|(\))/g;
+let RegExpObject = /(-?[0-9]+)|(\+)|(\*)|(\-)|(\/)|(\()|(\))/g;
 let tokenTypes = require('./tokenTypes');
 let tokenNames = [
     tokenTypes.NUMBER, 
